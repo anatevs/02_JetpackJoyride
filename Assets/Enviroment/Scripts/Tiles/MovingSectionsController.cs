@@ -80,7 +80,7 @@ namespace GameCore
         {
             for (int i = 0; i < _sections.Length; i++)
             {
-                var otherIndex = (i + 1) % _sections.Length;
+                var otherIndex = (i + _sections.Length - 1) % _sections.Length;
 
                 _changePlaceActions[i] = ChangePlaceAction(i, otherIndex);
 
