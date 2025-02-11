@@ -8,6 +8,6 @@ namespace GameCore
 
         public void SetToInitPosX();
 
-        public void AlignXToScreen(float leftCameraBorder);
+        public void AlignXToScreen(float leftCameraBorder, float cameraHalfWidth);
     }
 }

@@ -34,7 +34,7 @@ namespace GameCore
             transform.position = _initPos;
         }
 
-        public void AlignXToScreen(float leftCameraBorder)
+        public void AlignXToScreen(float leftCameraBorder, float cameraHalfWidth)
         {
             var initShiftX = _sections[0].LeftBorderShift + leftCameraBorder;
 

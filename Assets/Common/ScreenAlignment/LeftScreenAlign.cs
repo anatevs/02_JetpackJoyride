@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 namespace GameCore
 {
-    public class LeftScreenDisposition : MonoBehaviour
+    public sealed class LeftScreenAlign : MonoBehaviour
     {
-        private List<ILeftScreenAlignment> _leftScreenAlignments;
+        private IEnumerable<ILeftScreenAlignment> _leftScreenAlignments;
 
         private Camera _camera;
 
         private float _leftCameraBorder;
 
-        public void Construct(List<ILeftScreenAlignment> leftScreenAlignments)
+        [Inject]
+        public void Construct(IEnumerable<ILeftScreenAlignment> leftScreenAlignments)
         {
             _leftScreenAlignments = leftScreenAlignments;
         }
@@ -22,9 +24,11 @@ namespace GameCore
 
             _leftCameraBorder = GetLeftCameraBorder();
 
+            var halfWidth = GetCameraHalfWidth();
+
             foreach(var alignment in _leftScreenAlignments)
             {
-                alignment.AlignXToScreen(_leftCameraBorder);
+                alignment.AlignXToScreen(_leftCameraBorder, halfWidth);
             }
         }
 
@@ -43,9 +47,11 @@ namespace GameCore
             {
                 _leftCameraBorder = leftCameraBorder;
 
+                var halfWidth = GetCameraHalfWidth();
+
                 foreach (var alignment in _leftScreenAlignments)
                 {
-                    alignment.AlignXToScreen(leftCameraBorder);
+                    alignment.AlignXToScreen(leftCameraBorder, halfWidth);
                 }
             }
         }
@@ -54,6 +60,11 @@ namespace GameCore
         {
             return _camera.transform.position.x
                 - _camera.aspect * _camera.orthographicSize;
+        }
+
+        private float GetCameraHalfWidth()
+        {
+            return _camera.aspect * _camera.orthographicSize;
         }
     }
 }
